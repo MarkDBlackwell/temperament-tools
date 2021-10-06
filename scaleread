@@ -1,5 +1,8 @@
 #!/usr/bin/env -S ruby -w
 
+# See:
+#   http://huygens-fokker.org/scala/scl_format.html
+
 def blob_complete(blob)
   digits_separator_digits = blob.match(digits_separator_digits_regexp).to_s
   return digits_separator_digits unless digits_separator_digits.empty?
@@ -41,17 +44,27 @@ def digits_slash_regexp
   @digits_slash_regexp ||= ::Regexp.new( /^-?+\d++\// )
 end
 
+def header_length
+  @header_length ||= 2
+end
+
 def header_process
-  header_length = 2
   position = 0
   until lines_input.empty? do
     line = lines_input.pop
     is_comment = line.match(comment_indicator_regexp)
-    position += 1 unless is_comment
-# Echo comments and the header:
-    if is_comment || position <= header_length
+# Echo comment lines:
+    if is_comment
       mirror.push line
       next
+    end
+# Handle non-comment lines:
+    position += 1
+    mirror.push line if position <= header_length
+    if header_length == position
+      n = line.to_i
+      msg = "Number of notes promised in header: #{n} isn't required value: #{number_of_notes_required}."
+      ::Kernel.abort(msg) unless number_of_notes_required == n
     end
     if position > header_length
       lines_input.push line
@@ -82,6 +95,10 @@ end
 
 def mirror
   @mirror ||= Array.new
+end
+
+def number_of_notes_required
+  @number_of_notes_required ||= 12
 end
 
 def pitch_character_regexp
