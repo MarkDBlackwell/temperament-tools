@@ -76,11 +76,6 @@ def header_process
 end
 
 def line_value(line)
-# Process all these:
-#    %w[  2    2/   2/3  2.   2.3  -2    -2/   -2/3  -2.   -2.3  2//3  2/.3  2..3  2./3  -2//3  -2/.3  -2..3  -2./3  2-3  2.-3  ]
-# The result should be:
-#    %w[  2/1  2/1  2/3  2.0  2.3  -2/1  -2/1  -2/3  -2.0  -2.3  2/1   2/1   2.0   2.0   -2/1   -2/1   -2.0   -2.0   2/1  2.0   ]
-
   blob = blob_first(line)
   return nil if blob.empty?
   return blob.to_f unless blob.match(digits_dot_regexp).to_s.empty?
