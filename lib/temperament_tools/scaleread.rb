@@ -16,13 +16,19 @@ end
 def values_process
   until lines_input.empty? do
     line = lines_input.pop
-# For now, print the scale values:
-    value = line_value(line)
-    unless value
+# Print the scale values:
+    blob = blob_first(line)
+    if blob.empty?
       mirror.push line
-    else
-      mirror.push " #{value}"
+      next
     end
+    unless blob.match(digits_dot_regexp).to_s.empty?
+      mirror.push " #{blob.to_f}"
+      next
+    end
+    a = blob.split('/')
+    s = [a.first, '/', a.last].join('')
+    mirror.push " #{s}"
   end
   nil
 end

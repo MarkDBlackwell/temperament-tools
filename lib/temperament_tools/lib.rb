@@ -64,7 +64,7 @@ def header_process
     mirror.push line if position <= header_length
     if header_length == position
       n = line.to_i
-      msg = "Number of notes promised in header: #{n} isn't required value: #{number_of_notes_required}."
+      msg = "Number of notes announced in header: '#{n}' isn't required value of #{number_of_notes_required}."
       ::Kernel.abort(msg) unless number_of_notes_required == n
     end
     if position > header_length
@@ -73,16 +73,6 @@ def header_process
     end
   end
   nil
-end
-
-def line_value(line)
-  blob = blob_first(line)
-  return nil if blob.empty?
-  return blob.to_f unless blob.match(digits_dot_regexp).to_s.empty?
-#  a = blob.split('/').map{|e| e.to_f}
-#  ratio = a.first / a.last
-#  ::Math.log2(ratio) * 1200
-   blob
 end
 
 def lines_input

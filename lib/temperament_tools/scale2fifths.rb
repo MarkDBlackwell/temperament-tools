@@ -6,9 +6,17 @@ See:
 
 require_relative 'lib.rb'
 
+def line_value(line)
+  blob = blob_first(line)
+  return nil if blob.empty?
+  return blob.to_f unless blob.match(digits_dot_regexp).to_s.empty?
+  return blob if blob.start_with?('-')
+  a = blob.split('/').map{|e| e.to_f}
+  ratio = a.first / a.last
+  ::Math.log2(ratio) * 1200
+end
+
 def main
-  mirror.push 'Hello from scale2fifths!'
-  mirror.push ''
   header_process
   values_process
   puts mirror
