@@ -25,23 +25,23 @@ def blob_first(line)
 end
 
 def comment_indicator_regexp
-  @comment_indicator_regexp ||= ::Regexp.new( /^\s*!/ )
+  @comment_indicator_regexp ||= ::Regexp.new( /^\s*+!/ )
 end
 
 def digits_dot_regexp
-  @digits_dot_regexp ||= ::Regexp.new( /^-?[0-9]+\./ )
+  @digits_dot_regexp ||= ::Regexp.new( /^-?+\d++\./ )
 end
 
 def digits_regexp
-  @digits_regexp ||= ::Regexp.new( /^-?[0-9]+/ )
+  @digits_regexp ||= ::Regexp.new( /^-?+\d++/ )
 end
 
 def digits_separator_digits_regexp
-  @digits_separator_digits_regexp ||= ::Regexp.new( /^-?[0-9]+[\/\.][0-9]+/ )
+  @digits_separator_digits_regexp ||= ::Regexp.new( /^-?+\d++[.\/]\d++/ )
 end
 
 def digits_slash_regexp
-  @digits_slash_regexp ||= ::Regexp.new( /^-?[0-9]+\// )
+  @digits_slash_regexp ||= ::Regexp.new( /^-?+\d++\// )
 end
 
 def line_value(line)
@@ -60,7 +60,7 @@ def line_value(line)
 end
 
 def pitch_character_regexp
-  @pitch_character_regexp ||= ::Regexp.new( /^[-0-9.\/]*/ )
+  @pitch_character_regexp ||= ::Regexp.new( /^[-.\d\/]*+/ )
 end
 
 def run
