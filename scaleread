@@ -44,6 +44,26 @@ def digits_slash_regexp
   @digits_slash_regexp ||= ::Regexp.new( /^-?+\d++\// )
 end
 
+def header_process
+  header_length = 2
+  position = 0
+  until lines_input.empty? do
+    line = lines_input.pop
+    is_comment = line.match(comment_indicator_regexp)
+    position += 1 unless is_comment
+# Echo comments and the header:
+    if is_comment || position <= header_length
+      mirror.push line
+      next
+    end
+    if position > header_length
+      lines_input.push line
+      break
+    end
+  end
+  nil
+end
+
 def line_value(line)
 # Process all these:
 #    %w[  2    2/   2/3  2.   2.3  -2    -2/   -2/3  -2.   -2.3  2//3  2/.3  2..3  2./3  -2//3  -2/.3  -2..3  -2./3  2-3  2.-3  ]
@@ -59,27 +79,34 @@ def line_value(line)
    blob
 end
 
+def lines_input
+  @lines_input ||= readlines.reverse
+end
+
+def mirror
+  @mirror ||= Array.new
+end
+
 def pitch_character_regexp
   @pitch_character_regexp ||= ::Regexp.new( /^[-.\d\/]*+/ )
 end
 
 def run
-  header_length = 2
-  position = 0
-  readlines.each do |line|
-# Echo comments and the header:
-    is_comment = line.match(comment_indicator_regexp)
-    position += 1 unless is_comment
-    if is_comment || position <= header_length
-      puts line
-      next
-    end
+  header_process
+  values_process
+  puts mirror
+  nil
+end
+
+def values_process
+  until lines_input.empty? do
+    line = lines_input.pop
 # For now, print the scale values:
     value = line_value(line)
     unless value
-      puts line
+      mirror.push line
     else
-      puts " #{value}"
+      mirror.push " #{value}"
     end
   end
   nil
