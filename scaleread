@@ -11,11 +11,8 @@ def blob_complete(blob)
   return digits_slash.concat('1') unless digits_slash.empty?
 
   digits = blob.match(digits_regexp).to_s
-  if digits.empty?
-    digits
-  else
-    digits.concat('/1') 
-  end
+  return digits.concat('/1') unless digits.empty?
+  digits
 end
 
 def blob_first(line)
