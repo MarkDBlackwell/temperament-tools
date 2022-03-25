@@ -7,11 +7,11 @@ See:
 def main(s)
   case s
   when 'scale_read'
-    require_relative 'scale_read.rb'
+    require_relative 'temperament_tools/scale_read.rb'
   when 'scale_to_fifths'
-    require_relative 'scale_to_fifths.rb'
+    require_relative 'temperament_tools/scale_to_fifths.rb'
   when 'twelve_select'
-    require_relative 'twelve_select.rb'
+    require_relative 'temperament_tools/twelve_select.rb'
   end
   nil
 end

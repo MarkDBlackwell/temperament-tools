@@ -2,33 +2,40 @@
 Author: Mark D. Blackwell
 =end
 
-require_relative 'share.rb'
+require_relative 'share/share.rb'
 
-def run
-  header_process
-  values_process
-  puts mirror
-  nil
-end
+module Temperament_Tools
+  module Scale_Read
+    extend ::Temperament_Tools::Share
+    extend self
 
-def values_process
-  until lines_input.empty? do
-    line = lines_input.pop
+    def run
+      header_process
+      values_process
+      puts mirror
+      nil
+    end
+
+    private_class_method def values_process
+      until lines_input.empty? do
+        line = lines_input.pop
 # Print the scale values:
-    blob = blob_first(line)
-    if blob.empty?
-      mirror.push line
-      next
+        blob = blob_first(line)
+        if blob.empty?
+          mirror.push line
+          next
+        end
+        unless blob.match(digits_dot_regexp).to_s.empty?
+          mirror.push " #{blob.to_f}"
+          next
+        end
+        a = blob.split('/')
+        s = [a.first, '/', a.last].join('')
+        mirror.push " #{s}"
+      end
+      nil
     end
-    unless blob.match(digits_dot_regexp).to_s.empty?
-      mirror.push " #{blob.to_f}"
-      next
-    end
-    a = blob.split('/')
-    s = [a.first, '/', a.last].join('')
-    mirror.push " #{s}"
   end
-  nil
 end
 
-run
+::Temperament_Tools::Scale_Read.run
