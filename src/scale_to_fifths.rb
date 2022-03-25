@@ -1,10 +1,8 @@
 =begin
 Author: Mark D. Blackwell
-See:
-  http://huygens-fokker.org/scala/scl_format.html
 =end
 
-require_relative 'lib.rb'
+require_relative 'share.rb'
 
 def line_value(line)
   blob = blob_first(line)
@@ -16,7 +14,7 @@ def line_value(line)
   ::Math.log2(ratio) * 1200
 end
 
-def main
+def run
   header_process
   values_process
   puts mirror
@@ -37,4 +35,4 @@ def values_process
   nil
 end
 
-main
+run

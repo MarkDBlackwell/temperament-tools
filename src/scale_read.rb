@@ -1,12 +1,10 @@
 =begin
 Author: Mark D. Blackwell
-See:
-  http://huygens-fokker.org/scala/scl_format.html
 =end
 
-require_relative 'lib.rb'
+require_relative 'share.rb'
 
-def main
+def run
   header_process
   values_process
   puts mirror
@@ -33,4 +31,4 @@ def values_process
   nil
 end
 
-main
+run

@@ -1,3 +1,7 @@
+=begin
+Author: Mark D. Blackwell
+=end
+
 def comment_indicator
   '!'
 end

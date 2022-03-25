@@ -1,3 +1,5 @@
 #!/usr/bin/env -S ruby -w
 
-require_relative 'lib/temperament_tools/scale2fifths.rb'
+require_relative 'src/main.rb'
+
+main 'scale_to_fifths'
