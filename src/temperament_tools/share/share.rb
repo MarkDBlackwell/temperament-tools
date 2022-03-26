@@ -78,7 +78,7 @@ module Temperament_Tools
     end
 
     def lines_input
-      @lines_input ||= readlines.reverse
+      @lines_input ||= scale_lines.reverse
     end
 
     def mirror
@@ -91,6 +91,22 @@ module Temperament_Tools
 
     private_class_method def pitch_character_regexp
       @pitch_character_regexp ||= ::Regexp.new( /^[-.\d\/]*+/ )
+    end
+
+    def scale_file_divide
+      scale_lines.map{|e| scale_line_divide(e)}.transpose
+    end
+
+    private_class_method def scale_line_divide(line)
+      line.match(scale_line_divide_regexp).captures
+    end
+
+    private_class_method def scale_line_divide_regexp
+      @scale_line_divide_regexp ||= ::Regexp.new( /([^!]*)(.*)/ )
+    end
+
+    private_class_method def scale_lines
+      @scale_lines ||= readlines.map(&:chomp)
     end
   end
 end

@@ -2,38 +2,12 @@
 Author: Mark D. Blackwell
 =end
 
+require_relative 'share/share.rb'
+
 module Temperament_Tools
   module Lines_Divide
+    extend ::Temperament_Tools::Share
     extend self
-
-    private_class_method def divide
-      readlines.map{|e| pair(e)}.transpose
-    end
-
-    private_class_method def pair(raw)
-# TODO: use regular expression.
-      line = raw.chomp
-      separator = '!'
-      if line == separator
-        apart = ['', '']
-      else
-        apart = line.split(separator)
-        apart.push('') if line.end_with?(separator)
-      end
-      segments = apart.reverse
-      case segments.length
-      when 0
-        before = ''
-        after = ''
-      when 1
-        before = segments.join('')
-        after = ''
-      else
-        before = segments.pop
-        after = segments.reverse.join(separator).prepend(separator)
-      end
-      [before, after]
-    end
 
     private_class_method def display(a)
       a.each_with_index{|e, i| puts "#{i.succ} (#{e.length}): #{e}"}
@@ -41,7 +15,7 @@ module Temperament_Tools
     end
 
     def run
-      before, after = divide
+      before, after = scale_file_divide
       puts 'Before comments:'
       display before
       puts 'Comments:'
